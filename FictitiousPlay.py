@@ -2,22 +2,18 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import random
 
-#defining the belief of player0
+#defining variables concerning player0
 int_0 = random.uniform(0,1)
 belief00 = int_0
 trajectory0 = [int_0]
 action0 = []
 
 
-#for simplicity, we assume 1's belief fixed
 int_1 = random.uniform(0,1)
 belief10 = int_1
 trajectory1 = [int_1]
 action1 = []
 
-#calculating expected values
-ev00 = belief00*1 + (1 - belief00)*(-1)
-ev10 = belief10*(-1) + (1 - belief10)*1
 
 # simulating 1's actions
 for i in range(1000):
@@ -40,6 +36,7 @@ for i in range(1000):
 	else:
 		action1.append(random.randint(0,1))
 		
+	# updating beliefs
 	belief10 = belief10 + (action0[i] - belief10) / (i + 2)
 	trajectory1.append(belief10)
 		
