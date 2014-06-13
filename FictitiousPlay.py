@@ -48,6 +48,11 @@ for i in range(1000):
 plt.plot(trajectory0, 'b-', label='player0')  
 plt.plot(trajectory1, 'r-', label='player1')  
 plt.legend()
+plt.savefig("fictitious0.png",bbox_inches="tight",pad_inches=0)
+
 plt.show()
+
+
+
 	
 	
