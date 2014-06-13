@@ -2,10 +2,11 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import random
 
+samples = []
+
 
 for k in range(1000): # you can change this number if you like
 
-	samples = []
 	
 	#defining variables concerning player0
 	int_0 = random.uniform(0,1)
@@ -44,11 +45,11 @@ for k in range(1000): # you can change this number if you like
 		
 		belief00 = belief00 + (action1[i] - belief00) / (i + 2)
 
-		samples.append(belief00)
+	samples.append(belief00)
 
-fig, axes = plt.subplots(figsize=(8, 12))
-axes.hist(samples, alpha=0.6, bins=20)
-plt.savefig("fictitious_hist.png",bbox_inches="tight",pad_inches=0)
+fig, axes = plt.subplots()
+axes.hist(samples)
+
 plt.show()
 
 
