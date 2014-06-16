@@ -19,8 +19,8 @@ action1 = []
 for i in range(1000):
 	
 	#calculating expected values
-	ev00 = belief00*1 + (1 - belief00)*(-1)
-	ev10 = belief10*(-1) + (1 - belief10)*1
+	ev00 = (1-belief00)*1 + belief00*(-1)
+	ev10 = (1-belief10)*(-1) + belief10*1
 	
 	if ev00 > 0:
 		action0.append(0)
