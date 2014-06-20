@@ -54,8 +54,11 @@ for i in range(1000):
 	take_action(x = ev1,y = action1)
 
 	# updating beliefs
-	belief0 = belief0 + (np.array([0,action1[i]]) - belief0)/(i + 2)
-	belief1 = belief1 + (np.array([0,action0[i]]) - belief1)/(i + 2)
+	m = belief0[1] + (action1[i] - belief0[1])/(i + 2)
+	n = belief1[1] + (action0[i] - belief1[1])/(i + 2)
+	belief0 = np.array([1-m,m])
+	belief1 = np.array([1-n,n])
+	
 	trajectory0.append(belief0[0])
 	trajectory1.append(belief1[0])
 
