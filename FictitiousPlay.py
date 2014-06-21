@@ -66,6 +66,9 @@ for x in range(100):
 
 fig, axes = plt.subplots()
 axes.hist(histo0)
+
+plt.savefig("fictitious_histo1.0.png",bbox_inches="tight",pad_inches=0)
+
 plt.show()
 
 
