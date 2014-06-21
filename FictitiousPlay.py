@@ -12,7 +12,7 @@ payoff_1 = np.array([[-1,1],[1,-1]])
 
 def set_intbelief():
 	int_belief = random.uniform(0,1)
-	return  np.array([int_belief,1-int_belief])
+	return  np.array([1-int_belief,int_belief])
 	 # belief about the opponent's actions
 
 belief0 = set_intbelief()
@@ -37,10 +37,10 @@ def take_action(x,y): # this takes a vector and a list as  arguments
 		y.append(random.randint(0,1))
 
 # lists used later to draw the graph
-trajectory0 = [belief0[0]]
+trajectory0 = [belief0[1]]
 action0 = []
 
-trajectory1 = [belief0[0]]
+trajectory1 = [belief0[1]]
 action1 = []
 
 
