@@ -27,7 +27,7 @@ def expected_value(payoff,beliefs):
 	return np.dot(payoff,beliefs)
 	# returns expected values of each action as a vector
 
-def take_action(x): # this takes a vector and a list as  arguments
+def take_action(x): # this takes a vector as an argument
 	 
 	if x[0] > x[1]:
 		return 0
@@ -56,8 +56,8 @@ for i in range(1000):
 	belief0 = np.array([1-m,m])
 	belief1 = np.array([1-n,n])
 	
-	trajectory0.append(belief0[0])
-	trajectory1.append(belief1[0])
+	trajectory0.append(belief0[1])
+	trajectory1.append(belief1[1])
 
 
 
