@@ -7,9 +7,9 @@
   \usetheme{default}
 }
 
-\title{\Large タイトル}
-\author{\large 名前}
-\date{\small 日付}
+\title{\Large Fictitious Play}
+\author{\large 山岸　敦}
+\date{\small 2014/6/28}
 
 \usefonttheme{professionalfonts}
 
@@ -37,57 +37,161 @@
 
 
 \begin{frame}
-\frametitle{はじめに}
+\frametitle{構成}
 \begin{itemize}\setlength{\parskip}{0.5em}
 \item
-項目1
-
+Fictitious Playとは？
 \item
-項目2
+シミュレーション結果の解説
  \begin{itemize}\setlength{\parskip}{0.5em}
  \item
- 1階層下の項目1
+Matching Pennies Game
  \item
- 1階層下の項目2
+ Coordination Game
  \end{itemize}
 
 \item
-このページの最後の項目
+Pythonコードの解説
 \end{itemize}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{次のスライド}
+\frametitle{Fictitious Playの解説}
 \begin{itemize}\setlength{\parskip}{0.5em}
 \item
-Ficititious playの説明1
+Ficititious playでは、相手の前回の行動により、「相手がどの手をどんな確率で出してくるか」についての予想（信念）が変化する状況が想定されます。\pause
 
 \item
-Ficititious playの説明2 \pause
+さらにどの時点でも、プレイヤーは「その時点での自信の信念に照らして最適」な行動をするとします。このとき、各人の信念の動きはどうなるのでしょうか？\pause
+\item
+信念の推移を定式化すると、（導出は省略しますが） 
 
 $x_0(t)$ は
 \[
 x_0(t+1)
 = x_0(t) + \frac{1}{t+2} (a_1(t) - x_0(t))
 \]
-と再帰的に書くことができる． \pause
+と再帰的に書くことができます。 
 
-\item
-Ficititious playの説明3 \pause
 
-\item
-``\texttt{pause}''をつけるとoverlayができる．
-
-\item
-ファイルの冒頭の\texttt{documentclass}のオプションで\texttt{handout}を指定すると，
-overlayにならずいっぺんに表示される．
-
-Webにのせるときや，印刷して配るときなどは\texttt{handout}を指定しておく．
 
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Matching Pennies Gameの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+Matching Pennies Gameの利得行列は
+\[\left( \begin{array}{cc}
+(1,-1) & (-1,1) \\
+(-1,1) & (1,-1) 
+\end{array} \right)\]
+です。ナッシュ均衡は両戦略に確率(0.5,0.5）ずつ付与する混合戦略のみであることがわかります。\pause
+
+\item
+お互いの信念が(0.5,0.5)に収斂するならば、ナッシュ均衡が実現する、と考えてよいでしょう\pause
+\item
+本当にそうなるか、シミュレーションした結果を示します。
+
+
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.58, bb=-250 -200 250 200]{fictitious_graph1.0.pdf}
+ \caption{Matching Pennies Game}
+ \label{fig:matchingpennies_plot}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.58, bb=-250 -200 250 200]{fictitious_histo1.0.png}
+ \caption{Matching Pennies Game}
+ \label{fig:matchingpennies_histo}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Coordination Gameの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+Coordination Gameの利得行列は
+\[\left( \begin{array}{cc}
+(4,4) & (0,3) \\
+(3,0) & (2,2) 
+\end{array} \right)\]
+です。ナッシュ均衡は純粋戦略の組（0,0）、(1,1)および、２人とも確率(2/3,1/3）ずつ付与する混合戦略の３つです。\pause
+
+\item
+先程とちがって、ナッシュ均衡が複数あります。このケースではどのようなプレイがなされるのでしょうか\pause
+\item
+本当にそうなるか、シミュレーションした結果を示します。
+
+
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.58, bb=-250 -200 250 200]{coordinationgame_graph1.png.png}
+ \caption{Coordination Game}
+ \label{fig:coordination_plot1}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.58, bb=100 200 400 300]{coordinationgame_graph2.png}
+ \label{fig:coordination_plot2}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.58, bb=-250 -200 250 200]{coordination_histo1.0.png}
+ \caption{Coordination Game}
+ \label{fig:coordination_histo}
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{補足:Coordination Game}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+計算するとわかりますが、各プレイヤーは「相手が2/3より大きいの確率で0をプレイするなら0を、それが2/3より小さければ1を」必ず選択します。このことから、混合戦略均衡で、たまたまお互いに0ないし1を取ればそちらの均衡に移るとわかります。 \pause
+\item
+「相手が均衡（純）戦略を取る確率が$p$以上の時、自分もその均衡（純）戦略を取るのが最適である」とき、その戦略の組み合わせは$p$-ドミナントと呼ばれます。\pause
+\item
+計算すると、(0,0)は2/3ドミナント、(1,1)は1/3ドミナントです。1/3のが小さいので、「相手が均衡（純）戦略を取る確率がより低くても最適で在り続ける」という意味で安全な均衡と考えられます。 \pause
+\item
+ヒストグラムを眺めると、混合戦略に収斂した回数はゼロで、また(0,0)均衡と比して(1,1)均衡がプレイされる頻度が圧倒的に大きいですが、それはこのような理論的背景による、と考えられます。
+
+
+\end{itemize}
+\end{frame}
+
 
 
 
@@ -110,18 +214,6 @@ pyplot.show()
 \verb|\begin{frame}| から \verb|\end{frame}| までを
 コピー\&ペーストしてスライドを増やしていく．
 \end{itemize}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{図}
-\begin{figure}
- \centering
- \includegraphics[bb=0 0 200 100]{fictitious_graph1.0.pdf}
- \caption{図の表示}
- \label{fig:matchingpennies_plot}
-\end{figure}
 \end{frame}
 
 
