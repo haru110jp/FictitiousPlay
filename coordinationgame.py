@@ -38,7 +38,7 @@ def take_action(x): # this takes a vector as an argument
 
 # lists used later to draw the graph
 trajectory0 = [belief0[1]]
-trajectory1 = [belief0[1]]
+trajectory1 = [belief1[1]]
 
 
 # simulating  actions
