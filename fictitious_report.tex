@@ -195,18 +195,24 @@ Coordination Gameの利得行列は
 
 
 \begin{frame}[containsverbatim]% verbatim 環境を使えるように
-\frametitle{コードの説明とか}
+\frametitle{Matching Pennies Game:コードの解説}
 \begin{itemize}\setlength{\parskip}{0.5em}
 \item
-コードの表示の例
+まずは必要な物をimportし、利得をnparrayで設定します。これを用いると後々期待利得の計算などがラクになります。
 \begin{verbatim}
-import numpy
-from matplotlib import pyplot
+from __future__ import division
+import matplotlib.pyplot as plt
+import random 
+import numpy as np
 
-x = numpy.arange(0, 10, 0.1)
-y = numpy.cos(x)
-pyplot.plot(x,y)
-pyplot.show()
+
+
+#defining variables and functions that are useful
+
+payoff_0 = np.array([[1,-1],[-1,1]])
+payoff_1 = np.array([[-1,1],[1,-1]])
+
+
 \end{verbatim}
 
 \item
@@ -216,18 +222,116 @@ pyplot.show()
 \end{frame}
 
 
+\begin{frame}[containsverbatim]% verbatim 環境を使えるように
+\frametitle{Matching Pennies Game:コードの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+次に、必要な関数を定義していきます。ついでに、初期信念もここで設定しています。
+\begin{verbatim}
+def set_intbelief():
+	int_belief = random.uniform(0,1)
+	return  np.array([1-int_belief,int_belief])
+	 # belief about the opponent's actions
+
+belief0 = set_intbelief()
+belief1 = set_intbelief()
+
+def expected_value(payoff,beliefs):
+	return np.dot(payoff,beliefs)
+	# returns expected values of each action as a vector
+
+
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]% verbatim 環境を使えるように
+\frametitle{Matching Pennies Game:コードの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+引き続き、必要な関数を定義していきます。あと、後にグラフを書くのに使うリストTrajectoryを設定しています。
+\begin{verbatim}
+def take_action(x)
+: # this takes a vector as an argument
+
+	if x[0] > x[1]:
+		return 0
+	elif x[0] < x[1]:
+		return 1
+	else:
+		return random.randint(0,1)
+
+# lists used later to draw the graph
+trajectory0 = [belief0[1]]
+trajectory1 = [belief1[1]]
+
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]% verbatim 環境を使えるように
+\frametitle{Matching Pennies Game:コードの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+for文で、ゲームをプレイ。信念の軌跡はTrajectoryに保存
+\begin{verbatim}
+for i in range(1000):
+
+	ev0 = expected_value(payoff_0,belief0)
+	ev1 = expected_value(payoff_1,belief1)
+
+	action0 = take_action(ev0)
+	action1 = take_action(ev1)
+
+	# updating beliefs
+	m = belief0[1] + (action1 - belief0[1])/(i + 2)
+	n = belief1[1] + (action0 - belief1[1])/(i + 2)
+	belief0 = np.array([1-m,m])
+	belief1 = np.array([1-n,n])
+
+	trajectory0.append(belief0[1])
+	trajectory1.append(belief1[1])
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]% verbatim 環境を使えるように
+\frametitle{Matching Pennies Game:コードの解説}
+\begin{itemize}\setlength{\parskip}{0.5em}
+\item
+描画します。\verb!#!を取ると画像が保存できます。
+\begin{verbatim}
+plt.plot(trajectory0, 'b-', label='player0')  
+plt.plot(trajectory1, 'y-', label='player1')  
+plt.legend()
+#plt.savefig
+#("fictitious_graph1.0.png"
+,bbox_inches="tight",pad_inches=0)
+
+plt.show()
+
+\end{verbatim}
+\item
+ヒストグラムもほぼ同様のプログラムです。このプログラムを、さらにfor文でメタ的に包み込む形になります。
+
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{まとめ}
 \begin{itemize}\setlength{\parskip}{0.5em}
 \item
-まとめ
+二種類のゲームをプレイさせて、どんな戦略の組が均衡になるか調べることができます。今回僕が試したゲーム以外では、永遠に均衡にたどり着かないケースもありそうです。
 
 \item
-よくわかっていない点とか
-
+ヒストグラムを描くときにforループを二重にするという原始的手法を用いましたが、処理回数が指数的に増加しているのでもっさりしています。
+どう改善できるのでしょうか…
 \item
-今後の課題とか
+2人2戦略ゲームについては、それなりに一般性の高いコードが書けたと思います。
+しかし、ここからn人、n戦略へと拡張するならば複雑性が増し、classを定義して整理していく必要が生まれそうです。
+\item
+今回は、classについては逆に複雑になる＋恩恵が薄い気がしたので避けましたが、もう少し複雑なバージョンをclassで書いて将来的には使いこなせるように練習したい。
 \end{itemize}
 \end{frame}
 
